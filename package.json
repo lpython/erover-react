@@ -1,0 +1,61 @@
+{
+  "name": "react-typescript-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
+    "formik": "^1.5.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "typeface-roboto": "0.0.54",
+    "yup": "^0.27.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/preset-env": "^7.4.3",
+    "@types/react": "^16.8.10",
+    "@types/react-dom": "^16.8.3",
+    "autoprefixer": "^9.5.1",
+    "typescript": "^3.4.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties",
+      [
+        "@babel/plugin-transform-react-jsx",
+        {
+          "pragmaFrag": "React.Fragment"
+        }
+      ]
+    ]
+  },
+  "postcss": {
+    "modules": true,
+    "plugins": {
+      "postcss-modules": {
+        "generateScopedName": "[path]__[name]__[local]__",
+        "globalModulePaths": [
+          ".global."
+        ],
+        "root": "."
+      },
+      "autoprefixer": {
+        "grid": true
+      }
+    }
+  }
+}
