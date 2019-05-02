@@ -11,7 +11,6 @@ import Header from './header.jsx';
 import Main from './main.jsx';
 import Footer from './footer.jsx';
 
-
 const theme = createMuiTheme({
   palette: {
     primary: {

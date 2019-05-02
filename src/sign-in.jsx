@@ -1,52 +1,65 @@
 import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import { Formik } from "formik";
-import * as Yup from "yup";
+import SignInForm from "./sign-in-form-2.jsx";
 
-import { SignInForm } from "./sign-in-form-2.jsx";
-import { Debug } from './formik-debug.jsx';
+const styles = theme => ({
+  paper: { 
+    padding: 20, 
+    margin: 5, 
+    [theme.breakpoints.up('sm')]: {
+      height: 'calc(100% )' 
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: '100%' 
+    },
+    overflowY: 'auto'
+  },
 
-
-const validationSchema = Yup.object({
-  name: Yup.string("Enter a name").required("Name is required"),
-  email: Yup.string("Enter your email")
-    .email("Enter a valid email")
-    .required("Email is required"),
-  password: Yup.string("")
-    .min(8, "Password must contain at least 8 characters")
-    .required("Enter your password")  
+  container: {
+    [theme.breakpoints.up('sm')]: {
+      height: 'calc(100% - 64px - 48px)'
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: 'calc(100% - 56px - 48px)'
+    }
+  },
+  item: {
+    [theme.breakpoints.up('sm')]: {
+      width: '50%'
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }  
+  }
 });
 
-class InputForm extends Component {
+export default withStyles(styles)(class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const classes = this.props;
-    const values = { name: "", email: "", password: "" };    
+    const { classes } = this.props;
     
     return (
-      <>
-        <Typography variant="h5">Sign In</Typography>
-        <Formik
-            render={props => (
-              <>
-                <SignInForm {...props} />
-                <Debug />
-              </>
-            )}
-            initialValues={values}
-            validationSchema={validationSchema}
-            // component={SignInForm}
-        />
-      </>
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        className={classes.container}
+      >
+        <Grid item className={classes.item}>
+          <Paper className={classes.paper}>
+            <Typography variant="h5">Sign In</Typography>
+            <SignInForm />
+          </Paper>
+        </Grid>
+      </Grid>
     );
   }
-}
-
-export default InputForm;
+})
