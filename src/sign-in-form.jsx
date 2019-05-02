@@ -4,9 +4,7 @@ import { render } from 'react-dom';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
-
-
-function App({values, errors, touched}) {
+function SignInForm({values, errors, touched}) {
   return (
     <>
       <Form>
@@ -42,4 +40,4 @@ export default withFormik({
   handleSubmit(values) {
     console.log(values);
   }
-})(App);
+})(SignInForm);

@@ -44,42 +44,14 @@ class App extends Component {
 }
 
 const styles = theme => ({
-  paper: { 
-    padding: 20, 
-    margin: 5, 
-    [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% )' 
-    },
-    [theme.breakpoints.down('xs')]: {
-      height: '100%' 
-    },
-    overflowY: 'auto'
-  },
-  '@global': {
-    'html, body, #app': {
-      height: '99%',
-    }
-  },
-  container: {
-    [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% - 64px - 48px)'
-    },
-    [theme.breakpoints.down('xs')]: {
-      height: 'calc(100% - 56px - 48px)'
-    }
-  }
+  
 });
 
 const Body = withStyles(styles)(function Body({ classes }) {
   return (
     <>
-      {/* <AppBar /> */}
       <Header />
-      <Grid className={classes.container}>
-        <Paper className={classes.paper}>
-          <Main  />
-        </Paper>
-      </Grid>
+      <Main  />
       <Footer/>
     </>
   );

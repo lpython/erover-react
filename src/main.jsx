@@ -1,28 +1,26 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
 
 import { 
-  Paper, withStyles
+  Grid, Paper, withStyles
 } from '@material-ui/core';
 
-import Form from './form.jsx';
-
+import SignIn from './sign-in.jsx';
 
 const styles = theme => ({
   paper: { 
-    // padding: 20, 
-    // margin: 5, 
-    // [theme.breakpoints.up('sm')]: {
-    //   height: 'calc(100% - 10px)' 
-    // },
-    // [theme.breakpoints.down('xs')]: {
-    //   height: '100%' 
-    // },
+    padding: 20, 
+    margin: 5, 
+    [theme.breakpoints.up('sm')]: {
+      height: 'calc(100% )' 
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: '100%' 
+    },
     overflowY: 'auto'
   },
   '@global': {
     'html, body, #app': {
-      height: '100%'
+      height: '99%',
     }
   },
   container: {
@@ -34,17 +32,29 @@ const styles = theme => ({
     }
   },
   item: {
+    [theme.breakpoints.up('sm')]: {
+      width: '50%'
+    },
     [theme.breakpoints.down('xs')]: {
-      height: '50%'
-    }
+      width: '100%'
+    }  
   }
 });
 
 
-export default withStyles(styles)(function Main(props) {
+export default withStyles(styles)(function Main({ classes }) {
   return (
-    <div>
-      <p>Main</p>
-    </div>
+    <Grid 
+      container 
+      justify="center"
+      alignItems="center"
+      className={classes.container}
+    >
+      <Grid item className={classes.item}>
+        <Paper className={classes.paper}>
+          <SignIn />
+        </Paper>
+      </Grid>
+    </Grid>
   )
 })
