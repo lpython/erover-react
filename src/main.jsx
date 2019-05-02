@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 
 import SignIn from './sign-in.jsx';
+import UserDashboard from './user-dashboard.jsx';
 
 const styles = theme => ({
   '@global': {
@@ -16,6 +17,7 @@ const styles = theme => ({
 
 export default withStyles(styles)(function Main({ classes }) {
   return (
-    <SignIn />
+    // <SignIn />
+    <UserDashboard />
   )
 })

@@ -25,15 +25,12 @@ export default function SignInForm() {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(e) => {
-        e.prevendDefault();
-        alert('OK!!!')
+        // e.preventDefault();
+        // alert('OK!!!')
       }}
     >
      { (props) => {
-        const {
-          handleSubmit,
-        } = props;
-      
+              
         console.log(props);
         const margin = {marginTop: '5px', marginBottom: '5px'};
       
@@ -58,7 +55,6 @@ export default function SignInForm() {
               variant="contained"
               color="primary"
               style={{marginTop: '1rem'}}
-              onClick={handleSubmit}
               fullWidth
             >
               Submit
