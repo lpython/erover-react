@@ -4,6 +4,10 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import withStyles from "@material-ui/core/styles/withStyles";
 
+import Facilites from './facilities.jsx';
+
+import exampleFacilites from './example-data/facilities.json';
+
 const styles = theme => ({
   paper: { 
     padding: 20, 
@@ -47,6 +51,8 @@ export default withStyles(styles)(class SignIn extends Component {
   render() {
     const { classes } = this.props;
     
+    
+
     return (
       <Grid
         container
@@ -56,10 +62,13 @@ export default withStyles(styles)(class SignIn extends Component {
       >
         <Grid item className={classes.item}>
           {/* <Paper  className={classes.paper}> */}
-            <Typography variant="h5">Facilities</Typography>
+            {/* <Typography variant="h5">Facilities</Typography> */}
+            <Facilites data={exampleFacilites} />
           {/* </Paper> */}
         </Grid>
       </Grid>
     );
   }
 })
+
+

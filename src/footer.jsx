@@ -13,7 +13,6 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { withStyles, Typography } from '@material-ui/core';
 
 export default  ({ classes }) => {
-    
   return (
     <>
       <AppBar position="fixed" color="primary" style={{top: 'auto', bottom: 0}}>

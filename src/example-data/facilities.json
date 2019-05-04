@@ -1,0 +1,13 @@
+[
+  {
+    "id": "8",
+    "name": "bas",
+    "address": "1 church ave",
+    "city": "ballston spa",
+    "state": "ny",
+    "zip": "12801",
+    "femap154": true,
+    "atc20r": false,
+    "atc20d": false
+  }
+]

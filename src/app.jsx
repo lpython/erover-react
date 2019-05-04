@@ -28,7 +28,7 @@ const theme = createMuiTheme({
 
 class App extends Component {
   state = {
-    
+    page: 'facilities'
   };
 
   render() {
@@ -36,7 +36,7 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <Body />
+        <Body page={this.state.page}/>
       </MuiThemeProvider>
     );
   }
@@ -46,12 +46,12 @@ const styles = theme => ({
   
 });
 
-const Body = withStyles(styles)(function Body({ classes }) {
+const Body = withStyles(styles)(function Body({ classes, page }) {
   return (
     <>
       <Header />
       <Main  />
-      <Footer/>
+      { page == 'signIn' && <Footer/> }  
     </>
   );
 });
