@@ -21,13 +21,9 @@ const initialValues = { name: "", email: "", password: "" };
 export default function SignInForm() {
   return (
     <Formik
-     
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(e) => {
-        // e.preventDefault();
-        // alert('OK!!!')
-      }}
+      onSubmit={(e) => { }}
     >
      { (props) => {
               

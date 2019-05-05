@@ -18,7 +18,6 @@ const styles = theme => ({
     },
     overflowY: 'auto'
   },
-
   container: {
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px - 48px)'

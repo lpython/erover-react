@@ -9,18 +9,6 @@ import Facilites from './facilities.jsx';
 import exampleFacilites from './example-data/facilities.json';
 
 const styles = theme => ({
-  paper: { 
-    padding: 20, 
-    margin: 5, 
-    [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% )' 
-    },
-    [theme.breakpoints.down('xs')]: {
-      height: '100%' 
-    },
-    overflowY: 'auto'
-  },
-
   container: {
     [theme.breakpoints.up('sm')]: {
       height: 'calc(100% - 64px - 48px)'
@@ -32,17 +20,11 @@ const styles = theme => ({
   item: {
     padding: '20px',
     margin: '5px',
-    // [theme.breakpoints.up('sm')]: {
-    //   width: '50%'
-    // },
-    // [theme.breakpoints.down('xs')]: {
-    //   width: '100%'
-    // } 
     width: '100%'
   }
 });
 
-export default withStyles(styles)(class SignIn extends Component {
+export default withStyles(styles)(class UserDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -50,21 +32,11 @@ export default withStyles(styles)(class SignIn extends Component {
 
   render() {
     const { classes } = this.props;
-    
-    
 
     return (
-      <Grid
-        container
-        // justify="center"
-        // alignItems="center"
-        className={classes.container}
-      >
+      <Grid container className={classes.container}>
         <Grid item className={classes.item}>
-          {/* <Paper  className={classes.paper}> */}
-            {/* <Typography variant="h5">Facilities</Typography> */}
-            <Facilites data={exampleFacilites} />
-          {/* </Paper> */}
+          <Facilites data={exampleFacilites} />
         </Grid>
       </Grid>
     );
