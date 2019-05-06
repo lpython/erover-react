@@ -44,6 +44,17 @@ const formStyles = theme => ({
       paddingBottom: theme.spacing.unit / 2
     }
   },
+  button: {
+    '& > button': {
+      margin: theme.spacing.unit
+    }
+  },
+  textField: {
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: '20rem'
+    }
+  },
   fieldLargeMargin: {
     margin: theme.spacing.unit * 3,
   },

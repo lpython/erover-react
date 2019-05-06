@@ -23,6 +23,13 @@ const theme = createMuiTheme({
       light: amber[200],
       dark: amber[700]
     } 
+  },
+  overrides: {
+    MuiFormControlLabel: {
+      root: {
+        width: '100%'
+      }
+    }
   }
 });
 

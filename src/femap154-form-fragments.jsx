@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
+import { spacing } from '@material-ui/system';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -55,24 +56,24 @@ export class LocationPanel extends PureComponent {
           <Typography className={classes.heading}>Location</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container className={classes.container} >
-            <Grid item xs={12}> <Typography> Address : </Typography> </Grid>
-            <Grid item xs={12}>
+          <Grid container direction="column" className={classes.container} >
+            <Grid item > <Typography> Address : </Typography> </Grid>
+            <Grid item >
               <Grid container spacing={16}>
-                <Grid item xs={4}>
+                <Grid item xs={6} sm={2} md>
                   <Field name="latitude" type="number" label="Latitude" fullWidth component={TextField} />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={6} sm={2} md>
                   <Field name="longitude" type="number" label="Longitude" fullWidth component={TextField} />
                 </Grid>
-                <Grid item xs={4}>
-                  <Grid container spacing={8}>
-                    <Grid item xs={12}> <Typography> Get Lat/Lon from : </Typography> </Grid>
+                <Grid item   style={{ flexGrow: 1 }}>
+                  <Grid container direction="column" spacing={8}>
+                    <Grid item> <Typography> Get Lat/Lon from : </Typography> </Grid>
                     <Grid item >
                       <Grid container spacing={8}>
-                        <Grid item xs={6}> <Button variant="contained" fullWidth>Present location</Button> </Grid>
-                        <Grid item xs={3}> <Button variant="contained" fullWidth>Address</Button> </Grid>
-                        <Grid item xs={3}> <Button variant="contained" fullWidth>Map</Button> </Grid>
+                        <Grid item > <Button variant="contained" >Present location</Button> </Grid>
+                        <Grid item > <Button variant="contained" >Address</Button> </Grid>
+                        <Grid item > <Button variant="contained" >Map</Button> </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -95,57 +96,50 @@ export class DescriptionDetails extends PureComponent {
           <Typography className={classes.heading}> Description </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container direction="column" className={classes.container}>
-            <Grid item xs={12}>
-              <Grid container spacing={16}>
-                <Grid item xs={3}>
-                  <Field name="storiesAboveGrade" type="number" label="Stories Above Grade" fullWidth component={TextField} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Field name="storiesBelowGrade" type="number" label="Stories Below Grade" fullWidth component={TextField} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Field name="yearBuilt" type="number" label="Year Built" fullWidth component={TextField} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Field name="yearBuilt" Label={{ label: 'Year Built is an Estimate' }} component={CheckboxWithLabel} />
-                </Grid>
-              </Grid>
-              <Grid container spacing={16}>
-                <Grid item xs={3}>
-                  <Field name="floorArea" type="number" label="Floor Area" fullWidth component={TextField} />
-                </Grid>
-                <Grid item xs={3}>
-                  <Field name="codeYear" type="number" label="Code Year" fullWidth component={TextField} />
-                </Grid>
-                <Grid item xs={3}>
-                  <FormControl component="fieldset" className={classNames(classes.formControl, classes.fieldLargeMargin)}>
-                    <FormLabel > Are There additions? </FormLabel>
-                    <Field name="description.areThereAdditions" component={RadioGroup}>
-                      <FormControlLabel
-                        value="yes"
-                        control={<Radio disabled={false} />}
-                        label="Yes"
-                        disabled={false}
-                      />
-                      <FormControlLabel
-                        value="no"
-                        control={<Radio disabled={false} />}
-                        label="No"
-                        disabled={false}
-                      />
-                    </Field>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography>Additional Years PLACEHOLD</Typography>
-                </Grid>
-              </Grid>
+          <Grid container spacing={16} className={classes.container}>
+            <Grid item >
+              <Field name="storiesAboveGrade" type="number" label="Stories Above Grade"  component={TextField} />
+            </Grid>
+            <Grid item >
+              <Field name="storiesBelowGrade" type="number" label="Stories Below Grade"  component={TextField} />
+            </Grid>
+            <Grid item >
+              <Field name="yearBuilt" type="number" label="Year Built"  component={TextField} />
+            </Grid>
+            <Grid item >
+              <Field name="yearBuilt" Label={{ label: 'Year Built is an Estimate' }} component={CheckboxWithLabel} />
+            </Grid>
+            <Grid item >
+              <Field name="floorArea" type="number" label="Floor Area"  component={TextField} />
+            </Grid>
+            <Grid item >
+              <Field name="codeYear" type="number" label="Code Year"  component={TextField} />
+            </Grid>
+            <Grid item  >
+              <FormControl component="fieldset" className={classNames(classes.formControl, classes.fieldLargeMargin)}>
+                <FormLabel > Are There additions? </FormLabel>
+                <Field name="description.areThereAdditions" component={RadioGroup}>
+                  <FormControlLabel
+                    value="yes"
+                    control={<Radio disabled={false} />}
+                    label="Yes"
+                    disabled={false}
+                  />
+                  <FormControlLabel
+                    value="no"
+                    control={<Radio disabled={false} />}
+                    label="No"
+                    disabled={false}
+                  />
+                </Field>
+              </FormControl>
+            </Grid>
+            <Grid item >
+              <Typography>Additional Years PLACEHOLD</Typography>
             </Grid>
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-
     );
   }
 }
@@ -159,11 +153,11 @@ export class OccupancySoilTypeDetails extends PureComponent {
           <Typography className={classes.heading}> Occupancy & Soil Type </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container >
-            <Grid item xs={4}>
-              <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel > Occupancy </FormLabel>
-                <Grid container>
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={4}>
+              <Grid container>
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Occupancy </FormLabel>
                   <Grid item xs={12}>
                     <Field name="occupancy.Assembly" Label={{ label: 'Assembly' }} component={CheckboxWithLabel} />
                   </Grid>
@@ -200,13 +194,13 @@ export class OccupancySoilTypeDetails extends PureComponent {
                   <Grid item xs={12}>
                     <Field name="occupancy.Government" Label={{ label: 'Government' }} component={CheckboxWithLabel} />
                   </Grid>
-                </Grid>
-              </FormControl>
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
               <Field name="occupancy.residentialUnits" type="number" label="# Residential Units" component={TextField} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
               <FormControl component="fieldset" className={classes.formControl}>
                 <FormLabel > Soil Type </FormLabel>
                 <Field name="soilType" component={RadioGroup}>
@@ -237,113 +231,106 @@ export class HazardsDetails extends PureComponent {
           <Typography className={classes.heading}> Hazards </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container direction="column" spacing={16}>
+          <Grid container spacing={16}>
+
             <Grid item>
-              <Grid container>
-                <Grid item xs={6}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > Liquefaction </FormLabel>
-                    <Field name="hazards.liquefaction" component={RadioGroup}>
-                      <FormControlLabel value="yes" label="Yes" control={<Radio />} />
-                      <FormControlLabel value="no" label="No" control={<Radio />} />
-                      <FormControlLabel value="DNK" label="DNK" control={<Radio />} />
-                    </Field>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > Landslide </FormLabel>
-                    <Field name="hazards.landslide" component={RadioGroup}>
-                      <FormControlLabel value="yes" label="Yes" control={<Radio />} />
-                      <FormControlLabel value="no" label="No" control={<Radio />} />
-                      <FormControlLabel value="DNK" label="DNK" control={<Radio />} />
-                    </Field>
-                  </FormControl>
-                </Grid>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel > Liquefaction </FormLabel>
+                <Field name="hazards.liquefaction" component={RadioGroup}>
+                  <FormControlLabel value="yes" label="Yes" control={<Radio />} />
+                  <FormControlLabel value="no" label="No" control={<Radio />} />
+                  <FormControlLabel value="DNK" label="DNK" control={<Radio />} />
+                </Field>
+              </FormControl>
+            </Grid>
+            
+            <Grid item>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel > Landslide </FormLabel>
+                <Field name="hazards.landslide" component={RadioGroup}>
+                  <FormControlLabel value="yes" label="Yes" control={<Radio />} />
+                  <FormControlLabel value="no" label="No" control={<Radio />} />
+                  <FormControlLabel value="DNK" label="DNK" control={<Radio />} />
+                </Field>
+              </FormControl>
+            </Grid>
+
+            <Grid item>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel > Surface Rupture </FormLabel>
+                <Field name="hazards.surfaceRapture" component={RadioGroup} >
+                  <FormControlLabel value="yes" label="Yes" control={<Radio />} />
+                  <FormControlLabel value="no" label="No" control={<Radio />} />
+                  <FormControlLabel value="DNK" label="DNK" control={<Radio />} />
+                </Field>
+              </FormControl>
+            </Grid>
+
+            <Grid item>
+              <Grid container >
+                <FormControl component="fieldset"  className={classes.formControl}>
+                  <FormLabel > Exterior Falling Hazards </FormLabel>
+                  <Grid item xs={12}>
+                    <Field name="hazards.exteriorFalling.unbraced Chimneys" Label={{ label: 'Unbraced Chimneys' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Field
+                      name="hazards.exteriorFalling.claddingOrVeneer"
+                      Label={{ label: 'Heavy Cladding or Heavy Veneer' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
               </Grid>
             </Grid>
 
             <Grid item>
               <Grid container>
-                <Grid item xs={6}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > Surface Rupture </FormLabel>
-                    <Field name="hazards.surfaceRapture" component={RadioGroup} >
-                      <FormControlLabel value="yes" label="Yes" control={<Radio />} />
-                      <FormControlLabel value="no" label="No" control={<Radio />} />
-                      <FormControlLabel value="DNK" label="DNK" control={<Radio />} />
-                    </Field>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  {/* <Grid container> */}
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > Adjacency </FormLabel>
-                    <Grid item xs={12}>
-                      <Field name="hazards.adjacency.pounding" Label={{ label: 'Pounding' }} component={CheckboxWithLabel} />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field
-                        name="hazards.adjacency.tallerBuilding"
-                        Label={{ label: 'Falling Hazards from Taller Adjacent Building' }} component={CheckboxWithLabel} />
-                    </Grid>
-                  </FormControl>
-                  {/* </Grid> */}
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Grid container spacing={16}>
-                <Grid item xs={6}>
-                  <Field
-                    type="text"
-                    name="hazards.verticalIrregularity"
-                    label="Vertical Irregularity"
-                    multiline
-                    rows="10"
-                    fullWidth
-                    component={TextField} />
-                </Grid>
-                <Grid item xs={6}>
-                  <Field
-                    type="text"
-                    name="hazards.planIrregularity"
-                    label="Plan Irregularity"
-                    multiline
-                    rows="10"
-                    fullWidth
-                    component={TextField} />
-                </Grid>
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Adjacency </FormLabel>
+                  <Grid item xs={12}>
+                    <Field name="hazards.adjacency.pounding" Label={{ label: 'Pounding' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Field
+                      name="hazards.adjacency.tallerBuilding"
+                      Label={{ label: 'Falling Hazards from Taller Adjacent Building' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
               </Grid>
             </Grid>
 
-            <Grid item>
-              <Grid container spacing={16}>
-                <Grid item xs={6}>
-                  <FormControl component="fieldset" style={{ marginTop: '16px' }} className={classes.formControl}>
-                    <FormLabel > Exterior Falling Hazards </FormLabel>
-                    <Grid item xs={12}>
-                      <Field name="hazards.exteriorFalling.unbraced Chimneys" Label={{ label: 'Unbraced Chimneys' }} component={CheckboxWithLabel} />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field
-                        name="hazards.exteriorFalling.claddingOrVeneer"
-                        Label={{ label: 'Heavy Cladding or Heavy Veneer' }} component={CheckboxWithLabel} />
-                    </Grid>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6}>
-                  <Field
-                    type="text"
-                    name="hazards.otherExteriorFalling"
-                    label="Other Exterior Falling Hazards"
-                    multiline
-                    rows="10"
-                    fullWidth
-                    component={TextField} />
-                </Grid>
-              </Grid>
+            <Grid item className={classes.textField}>
+              <Field
+                type="text"
+                name="hazards.verticalIrregularity"
+                label="Vertical Irregularity"
+                rows="10"
+                multiline
+                fullWidth
+                component={TextField} />
             </Grid>
+
+            <Grid item className={classes.textField}>
+              <Field
+                type="text"
+                name="hazards.planIrregularity"
+                label="Plan Irregularity"
+                rows="10"
+                multiline
+                fullWidth
+                component={TextField} />
+            </Grid>
+
+            <Grid item className={classes.textField}>
+              <Field
+                type="text"
+                name="hazards.otherExteriorFalling"
+                label="Other Exterior Falling Hazards"
+                rows="10"
+                multiline
+                fullWidth
+                component={TextField} />
+            </Grid>
+
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -363,7 +350,7 @@ export class Level1ScorePanel extends PureComponent {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Grid container direction="column">
-            <Grid item>
+            <Grid item className={classes.button}>
               <Button size="small" variant="contained" >W1</Button>
               <Button size="small" variant="contained" >W1A</Button>
               <Button size="small" variant="contained" >W2</Button>
@@ -466,66 +453,64 @@ export class OtherHazardsActionsDetails extends PureComponent {
           <Typography className={classes.heading}> Other Hazards & Actions Required </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container direction="column">
+          <Grid container spacing={16}>
             <Grid item >
-              <Grid container direction="row" spacing={16}>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column">
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > Are There Hazards That Trigger A Detailed Structural Evaluation? </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="otherHazardsAndActionsRequired.areThereHazardsThatTriggerADetailedStructuralEvaluation.poundingPotential"
-                          Label={{ label: 'Pounding Potential (unless SL2 > cut-off, if known)' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="otherHazardsAndActionsRequired.areThereHazardsThatTriggerADetailedStructuralEvaluation.tallerAdjacentBuilding"
-                          Label={{ label: 'Falling hazards from taller adjacent building' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="otherHazardsAndActionsRequired.areThereHazardsThatTriggerADetailedStructuralEvaluation.geoHazardsOrSoilTypeF"
-                          Label={{ label: 'Geologic hazards or Soil Type F' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="otherHazardsAndActionsRequired.areThereHazardsThatTriggerADetailedStructuralEvaluation.significantDamage"
-                          Label={{ label: 'Significant damage/deterioration to the structural system' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
+              <Grid container direction="column">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Are There Hazards That Trigger A Detailed Structural Evaluation? </FormLabel>
+                  <Grid item >
+                    <Field
+                      name="otherHazardsAndActionsRequired.areThereHazardsThatTriggerADetailedStructuralEvaluation.poundingPotential"
+                      Label={{ label: 'Pounding Potential (unless SL2 > cut-off, if known)' }} component={CheckboxWithLabel} />
                   </Grid>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column">
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > Detailed Structural Evaluation Required? </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="otherHazardsAndActionsRequired.detailedStructuralEvaluationRequired.yesUnknownType"
-                          Label={{ label: 'Yes, unknown FEMA building type or other building' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="otherHazardsAndActionsRequired.detailedStructuralEvaluationRequired.yesScore"
-                          Label={{ label: 'Yes, score less than cut-off' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="otherHazardsAndActionsRequired.detailedStructuralEvaluationRequired.yesOtherHazards"
-                          Label={{ label: 'Yes, other hazards present' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="otherHazardsAndActionsRequired.detailedStructuralEvaluationRequired.no"
-                          Label={{ label: 'Significant damage/deterioration to the structural system' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
+                  <Grid item >
+                    <Field
+                      name="otherHazardsAndActionsRequired.areThereHazardsThatTriggerADetailedStructuralEvaluation.tallerAdjacentBuilding"
+                      Label={{ label: 'Falling hazards from taller adjacent building' }} component={CheckboxWithLabel} />
                   </Grid>
-                </Grid>
+                  <Grid item >
+                    <Field
+                      name="otherHazardsAndActionsRequired.areThereHazardsThatTriggerADetailedStructuralEvaluation.geoHazardsOrSoilTypeF"
+                      Label={{ label: 'Geologic hazards or Soil Type F' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="otherHazardsAndActionsRequired.areThereHazardsThatTriggerADetailedStructuralEvaluation.significantDamage"
+                      Label={{ label: 'Significant damage/deterioration to the structural system' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
               </Grid>
             </Grid>
-            <Grid item >
+
+            <Grid item  >
+              <Grid container direction="column">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Detailed Structural Evaluation Required? </FormLabel>
+                  <Grid item >
+                    <Field
+                      name="otherHazardsAndActionsRequired.detailedStructuralEvaluationRequired.yesUnknownType"
+                      Label={{ label: 'Yes, unknown FEMA building type or other building' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="otherHazardsAndActionsRequired.detailedStructuralEvaluationRequired.yesScore"
+                      Label={{ label: 'Yes, score less than cut-off' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="otherHazardsAndActionsRequired.detailedStructuralEvaluationRequired.yesOtherHazards"
+                      Label={{ label: 'Yes, other hazards present' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="otherHazardsAndActionsRequired.detailedStructuralEvaluationRequired.no"
+                      Label={{ label: 'Significant damage/deterioration to the structural system' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <Grid item lg={4}>
               <Grid container direction="column">
                 <FormControl component="fieldset" className={classes.formControl}>
                   <FormLabel > Detailed Nonstructural Evaluation Recommended? </FormLabel>
@@ -550,6 +535,7 @@ export class OtherHazardsActionsDetails extends PureComponent {
                 </FormControl>
               </Grid>
             </Grid>
+
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -566,129 +552,125 @@ export class Level2VerticalDetails extends PureComponent {
           <Typography className={classes.heading}> Level 2 Vertical Irregularity </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container direction="column" wrap="nowrap" spacing={16}>
+          <Grid container spacing={16}>
+
             <Grid item >
-              <Grid container direction="row" spacing={16}>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column" >
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > Sloping Site </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="level2VerticalIrregularity.slopingSite.W1building"
-                          Label={{ label: 'W1-building' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2VerticalIrregularity.slopingSite.nonW1building"
-                          Label={{ label: 'Non W1-building' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column">
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > Weak and/or Soft Story </FormLabel>
-                      <Field name="level2VerticalIrregularity.weakAndOrSoftStory" component={RadioGroup} >
-                        <FormControlLabel
-                          value="W1Cripple"
-                          label="W1-building cripple wall"
-                          control={<Radio />} />
-                        <FormControlLabel
-                          value="W1OverGarage"
-                          label="W1 house over garage"
-                          control={<Radio />} />
-                        <FormControlLabel
-                          value="W1ABuildingOpenFront"
-                          label="W1A building open front"
-                          control={<Radio />} />
-                        <FormControlLabel
-                          value="NonW1LessThan50"
-                          label="Non-W1 building <50%"
-                          control={<Radio />} />
-                        <FormControlLabel
-                          value="NonW1GreaterThan50"
-                          label="Non-W1 building >50%"
-                          control={<Radio />} />
-                      </Field>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item >
-              <Grid container direction="row" spacing={16}>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column">
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > Setback </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="level2VerticalIrregularity.setback.diaphragmCantilever"
-                          Label={{ label: 'Diaphragm cantilever' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2VerticalIrregularity.setback.elementsInboard"
-                          Label={{ label: 'Vert elements inboard of story below' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2VerticalIrregularity.setback.inPlaneOffsetGreaterElementLength"
-                          Label={{ label: 'In-plane offset of vert elements > element length' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column">
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > Short Column/Pier </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="level2VerticalIrregularity.shortColumnPier.somePiersInSignificantLineDepth"
-                          Label={{ label: '>=20% piers in line height/depth < 50%' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2VerticalIrregularity.shortColumnPier.pierWidthSignificantLessThenSpandrelDepth"
-                          Label={{ label: 'Pier width < 1/5 spandrel depth' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item >
-              <Grid container direction="row" spacing={16}>
-                <Grid item xs={12} sm={6}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > Split Level </FormLabel>
+              <Grid container direction="column" >
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Sloping Site </FormLabel>
+                  <Grid item >
                     <Field
-                      name="level2VerticalIrregularity.splitLevelNearRoof"
-                      Label={{ label: 'There is a split level at one of the floor levels or at the roof.' }} component={CheckboxWithLabel} />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column">
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > Other </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="level2VerticalIrregularity.other.severe"
-                          Label={{ label: 'Severe' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2VerticalIrregularity.other.moderate"
-                          Label={{ label: 'Moderate' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
+                      name="level2VerticalIrregularity.slopingSite.W1building"
+                      Label={{ label: 'W1-building' }} component={CheckboxWithLabel} />
                   </Grid>
-                </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2VerticalIrregularity.slopingSite.nonW1building"
+                      Label={{ label: 'Non W1-building' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
               </Grid>
             </Grid>
+
+            <Grid item >
+              <Grid container direction="column">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Weak and/or Soft Story </FormLabel>
+                  <Field name="level2VerticalIrregularity.weakAndOrSoftStory" component={RadioGroup} >
+                    <FormControlLabel
+                      value="W1Cripple"
+                      label="W1-building cripple wall"
+                      control={<Radio />} />
+                    <FormControlLabel
+                      value="W1OverGarage"
+                      label="W1 house over garage"
+                      control={<Radio />} />
+                    <FormControlLabel
+                      value="W1ABuildingOpenFront"
+                      label="W1A building open front"
+                      control={<Radio />} />
+                    <FormControlLabel
+                      value="NonW1LessThan50"
+                      label="Non-W1 building <50%"
+                      control={<Radio />} />
+                    <FormControlLabel
+                      value="NonW1GreaterThan50"
+                      label="Non-W1 building >50%"
+                      control={<Radio />} />
+                  </Field>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <Grid item >
+              <Grid container direction="column">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Setback </FormLabel>
+                  <Grid item >
+                    <Field
+                      name="level2VerticalIrregularity.setback.diaphragmCantilever"
+                      Label={{ label: 'Diaphragm cantilever' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2VerticalIrregularity.setback.elementsInboard"
+                      Label={{ label: 'Vert elements inboard of story below' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2VerticalIrregularity.setback.inPlaneOffsetGreaterElementLength"
+                      Label={{ label: 'In-plane offset of vert elements > element length' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <Grid item >
+              <Grid container direction="column">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Short Column/Pier </FormLabel>
+                  <Grid item >
+                    <Field
+                      name="level2VerticalIrregularity.shortColumnPier.somePiersInSignificantLineDepth"
+                      Label={{ label: '>=20% piers in line height/depth < 50%' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2VerticalIrregularity.shortColumnPier.pierWidthSignificantLessThenSpandrelDepth"
+                      Label={{ label: 'Pier width < 1/5 spandrel depth' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <Grid item >
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel > Split Level </FormLabel>
+                <Field
+                  name="level2VerticalIrregularity.splitLevelNearRoof"
+                  Label={{ label: 'There is a split level at one of the floor levels or at the roof.' }} component={CheckboxWithLabel} />
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={3}>
+              <Grid container direction="column">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Other </FormLabel>
+                  <Grid item >
+                    <Field
+                      name="level2VerticalIrregularity.other.severe"
+                      Label={{ label: 'Severe' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2VerticalIrregularity.other.moderate"
+                      Label={{ label: 'Moderate' }} 
+                      component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
+              </Grid>
+            </Grid>
+
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -706,156 +688,144 @@ export class Level2OtherDetails extends PureComponent {
           <Typography className={classes.heading}> Level 2 Other Structural Modifiers </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container direction="column" wrap="nowrap" spacing={16}>
+          <Grid container spacing={16}>
             <Grid item >
-              <Grid container direction="row" spacing={16}>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column" >
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > Plan Irregularity </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.planIrregularity.torsionNotW1A"
-                          Label={{ label: 'Torsion (not W1A open front)' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.planIrregularity.nonParallelSystem"
-                          Label={{ label: 'Non Parallel System' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.planIrregularity.reentrantCornerGT25"
-                          Label={{ label: 'Reentrant corner > 25' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.planIrregularity.openDiaphragmGT50"
-                          Label={{ label: 'Open diaphragm > 50%' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.planIrregularity.c1c2beamsNotAligned"
-                          Label={{ label: 'C1 C2 beams not aligned w/ columns' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.planIrregularity.otherPlanIrregularity"
-                          Label={{ label: 'Other plan irregularity' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
+              <Grid container direction="column" >
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Plan Irregularity </FormLabel>
+                  <Grid item >
+                    <Field
+                      name="level2otherStructureModifiers.planIrregularity.torsionNotW1A"
+                      Label={{ label: 'Torsion (not W1A open front)' }} component={CheckboxWithLabel} />
                   </Grid>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column">
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > Pounding </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.planIrregularity.floorsDoNotAlignGT2Feet"
-                          Label={{ label: 'Floors do not align > 2 ft' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.planIrregularity.storyDiff2Plus"
-                          Label={{ label: '2+ story diff' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.planIrregularity.endOfBlock"
-                          Label={{ label: 'End of block' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
+                  <Grid item >
+                    <Field
+                      name="level2otherStructureModifiers.planIrregularity.nonParallelSystem"
+                      Label={{ label: 'Non Parallel System' }} component={CheckboxWithLabel} />
                   </Grid>
-                </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2otherStructureModifiers.planIrregularity.reentrantCornerGT25"
+                      Label={{ label: 'Reentrant corner > 25' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2otherStructureModifiers.planIrregularity.openDiaphragmGT50"
+                      Label={{ label: 'Open diaphragm > 50%' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2otherStructureModifiers.planIrregularity.c1c2beamsNotAligned"
+                      Label={{ label: 'C1 C2 beams not aligned w/ columns' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2otherStructureModifiers.planIrregularity.otherPlanIrregularity"
+                      Label={{ label: 'Other plan irregularity' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
               </Grid>
             </Grid>
+
             <Grid item >
-              <Grid container direction="row" spacing={16}>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column">
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > PC1/RM1 Bldg </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.PC1orRM1bldg.roofWallStringLedger"
-                          Label={{ label: 'Roof-wall ties w/ string ledger' }} component={CheckboxWithLabel} />
-                      </Grid>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.PC1orRM1bldg.interiorCrosswalls"
-                          Label={{ label: 'Interior crosswalls' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
+              <Grid container direction="column">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > Pounding </FormLabel>
+                  <Grid item >
+                    <Field
+                      name="level2otherStructureModifiers.planIrregularity.floorsDoNotAlignGT2Feet"
+                      Label={{ label: 'Floors do not align > 2 ft' }} component={CheckboxWithLabel} />
                   </Grid>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Grid container direction="column">
-                    <FormControl component="fieldset" className={classes.formControl}>
-                      <FormLabel > S2 Building </FormLabel>
-                      <Grid item >
-                        <Field
-                          name="level2otherStructureModifiers.S2Building.kBracingGeoVisible"
-                          Label={{ label: '"K" bracing geometry is visible' }} component={CheckboxWithLabel} />
-                      </Grid>
-                    </FormControl>
+                  <Grid item >
+                    <Field
+                      name="level2otherStructureModifiers.planIrregularity.storyDiff2Plus"
+                      Label={{ label: '2+ story diff' }} component={CheckboxWithLabel} />
                   </Grid>
-                </Grid>
+                  <Grid item >
+                    <Field
+                      name="level2otherStructureModifiers.planIrregularity.endOfBlock"
+                      Label={{ label: 'End of block' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
               </Grid>
             </Grid>
+
             <Grid item >
-              <Grid container direction="row" spacing={16}>
-                <Grid item xs={12} sm={6}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > C1 Building </FormLabel>
+              <Grid container direction="column">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > PC1/RM1 Bldg </FormLabel>
+                  <Grid item >
                     <Field
-                      name="level2otherStructureModifiers.C1Building.flatPlateAsBeam"
-                      Label={{ label: 'Flat plate serves as the beam in the moment frame.' }} component={CheckboxWithLabel} />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > URM </FormLabel>
+                      name="level2otherStructureModifiers.PC1orRM1bldg.roofWallStringLedger"
+                      Label={{ label: 'Roof-wall ties w/ string ledger' }} component={CheckboxWithLabel} />
+                  </Grid>
+                  <Grid item >
                     <Field
-                      name="level2otherStructureModifiers.URM.gableWalls"
-                      Label={{ label: 'Gable walls are present.' }} component={CheckboxWithLabel} />
-                  </FormControl>
-                </Grid>
+                      name="level2otherStructureModifiers.PC1orRM1bldg.interiorCrosswalls"
+                      Label={{ label: 'Interior crosswalls' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
               </Grid>
             </Grid>
+
             <Grid item >
-              <Grid container direction="row" spacing={16}>
-                <Grid item xs={12} sm={6}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > MH </FormLabel>
+              <Grid container direction="column">
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <FormLabel > S2 Building </FormLabel>
+                  <Grid item >
                     <Field
-                      name="level2otherStructureModifiers.MH.supplementalBracing"
-                      Label={{ label: 'There is a supplemental seismic bracing system provided between the carriage and the ground.' }}
-                      component={CheckboxWithLabel} />
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > Retrofit </FormLabel>
-                    <Field
-                      name="level2otherStructureModifiers.retrofit.comprehensiveVisible"
-                      Label={{ label: 'Comprehensive seismic retrofit is visible or known from drawings.' }} component={CheckboxWithLabel} />
-                  </FormControl>
-                </Grid>
+                      name="level2otherStructureModifiers.S2Building.kBracingGeoVisible"
+                      Label={{ label: '"K" bracing geometry is visible' }} component={CheckboxWithLabel} />
+                  </Grid>
+                </FormControl>
               </Grid>
             </Grid>
+
             <Grid item >
-              <Grid container direction="row" spacing={16}>
-                <Grid item xs={12} sm={6}>
-                  <FormControl component="fieldset" className={classes.formControl}>
-                    <FormLabel > Redundancy </FormLabel>
-                    <Field
-                      name="level2otherStructureModifiers.redundancy"
-                      Label={{ label: 'The building has at least two bays of lateral elements on each side of the building in each direction.' }}
-                      component={CheckboxWithLabel} />
-                  </FormControl>
-                </Grid>
-              </Grid>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel > C1 Building </FormLabel>
+                <Field
+                  name="level2otherStructureModifiers.C1Building.flatPlateAsBeam"
+                  Label={{ label: 'Flat plate serves as the beam in the moment frame.' }} component={CheckboxWithLabel} />
+              </FormControl>
+            </Grid>
+
+            <Grid item >
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel > URM </FormLabel>
+                <Field
+                  name="level2otherStructureModifiers.URM.gableWalls"
+                  Label={{ label: 'Gable walls are present.' }} component={CheckboxWithLabel} />
+              </FormControl>
+            </Grid>
+
+            <Grid item >
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel > MH </FormLabel>
+                <Field
+                  name="level2otherStructureModifiers.MH.supplementalBracing"
+                  Label={{ label: 'There is a supplemental seismic bracing system provided between the carriage and the ground.' }}
+                  component={CheckboxWithLabel} />
+              </FormControl>
+            </Grid>
+
+            <Grid item >
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel > Retrofit </FormLabel>
+                <Field
+                  name="level2otherStructureModifiers.retrofit.comprehensiveVisible"
+                  Label={{ label: 'Comprehensive seismic retrofit is visible or known from drawings.' }} component={CheckboxWithLabel} />
+              </FormControl>
+            </Grid>
+
+            <Grid item >
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel > Redundancy </FormLabel>
+                <Field
+                  name="level2otherStructureModifiers.redundancy"
+                  Label={{ label: 'The building has at least two bays of lateral elements on each side of the building in each direction.' }}
+                  component={CheckboxWithLabel} />
+              </FormControl>
             </Grid>
           </Grid>
         </ExpansionPanelDetails>
