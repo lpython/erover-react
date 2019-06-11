@@ -1,13 +1,11 @@
 
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { array } from 'prop-types';
 import classNames from 'classnames';
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import { spacing } from '@material-ui/system';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -15,13 +13,23 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
-import { Formik, Field, Form } from "formik";
-import { TextField, CheckboxWithLabel, RadioGroup } from 'formik-material-ui';
+import { Field, FieldArray } from "formik";
+import { TextField, Checkbox, CheckboxWithLabel, RadioGroup } from 'formik-material-ui';
 import * as Yup from "yup";
 
 import { Debug } from './formik-debug.jsx';
+
+
 
 
 export class ScoreResultsPanel extends PureComponent {
@@ -135,7 +143,7 @@ export class DescriptionDetails extends PureComponent {
               </FormControl>
             </Grid>
             <Grid item >
-              <Typography>Additional Years PLACEHOLD</Typography>
+              <AdditionalYears />
             </Grid>
           </Grid>
         </ExpansionPanelDetails>
@@ -143,6 +151,71 @@ export class DescriptionDetails extends PureComponent {
     );
   }
 }
+
+const AdditionalYears = withStyles(theme => ({
+  button: {
+    marginTop: '4px',
+    marginBottom: '4px',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  },
+  paper: {
+    padding: theme.spacing.unit * 2
+  }
+}))(class AdditionalYears extends PureComponent {
+  render() {
+    const { classes } = this.props;
+    return (
+      <Paper className={classes.paper}>
+      
+        <Grid container direction="column" spacing={8}>
+          <FieldArray
+            name="additionalYears"
+            render={arrayHelpers => {
+              const { form, name } = arrayHelpers;
+              const values = form.values;
+              return (
+                <>
+                  <Typography>Additional Years: </Typography>
+
+                  {values.additionalYears && values.additionalYears.length > 0 ? (
+                    values.additionalYears.map((friend, index) => (
+                      <Grid item key={index}>
+                        <Field name={`additionalYears.${index}`} type="text" component={TextField} />
+    
+                        <Button
+                          type="button" variant="outlined" size="small" className={classes.button}
+                          onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
+                        >
+                          +
+                        </Button>
+    
+                        <Button
+                          type="button" variant="outlined" size="small" className={classes.button}
+                          onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                        >
+                          -
+                        </Button>
+                      </Grid>
+                    ))
+                  ) : (
+                    <Grid item>
+                      <Button type="button" onClick={() => arrayHelpers.push('')}>
+                        {/* show this when user has removed all friends from the list */}
+                        Add additional year(s)
+                      </Button>
+                    </Grid>
+                  )}
+                </>
+              )
+            }
+          }
+          />
+        </Grid>
+      </Paper>
+    );
+  }
+})
 
 export class OccupancySoilTypeDetails extends PureComponent {
   render() {
@@ -340,43 +413,101 @@ export class HazardsDetails extends PureComponent {
 }
 
 
-export class Level1ScorePanel extends PureComponent {
+const CustomTableCell = withStyles(theme => ({
+  root: {
+    padding: '4px 15px 4px 7px'
+  },
+  head: {
+    // backgroundColor: theme.palette.primary.dark,
+    // color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+export let Level1ScorePanel = withStyles(theme => ({
+  // table: {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   height: '100%',
+  //   "&>thead, &>tbody": {
+  //     display: 'block',
+  //   },
+  //   '&>thead': {
+  //     //margin-right: 0px, //margin to align correctly to scrollbar in table body
+  //   } ,
+  //   '&>tbody': {
+  //     flex: 1, //variable height
+  //     overflowY: 'scroll'
+  //   },
+  //   '&>tr': {
+  //     width: '100%',
+  //     display: 'flex',
+  //     '&>td, &>th': {
+  //       display: 'block',
+  //       flex: 1
+  //     }
+  //   }
+  // }
+  [theme.breakpoints.down('sm')]: {
+    panelDetails: { overflowX: 'auto', overflowY: 'auto', maxHeight: '80vh' }
+  }
+}))(class Level1ScorePanel extends PureComponent {
   render() {
     const { classes } = this.props;
+
+    const rows = [ 'W1', 'W1A', 'W2', 'S1', 'S2', 'S3', 'S4', 'S5', 'C1', 'C2', 'C3', 'PC1', 'PC2', 'RM1', 'RM2', 'URM' ];
+
     return (
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
           <Typography className={classes.heading}> Level 1 Score </Typography>
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <Grid container direction="column">
-            <Grid item className={classes.button}>
-              <Button size="small" variant="contained" >W1</Button>
-              <Button size="small" variant="contained" >W1A</Button>
-              <Button size="small" variant="contained" >W2</Button>
-              <Button size="small" variant="contained" >S1</Button>
-              <Button size="small" variant="contained" >S2</Button>
-              <Button size="small" variant="contained" >S3</Button>
-              <Button size="small" variant="contained" >S4</Button>
-              <Button size="small" variant="contained" >S5</Button>
-              <Button size="small" variant="contained" >C1</Button>
-              <Button size="small" variant="contained" >C2</Button>
-              <Button size="small" variant="contained" >C3</Button>
-              <Button size="small" variant="contained" >PC1</Button>
-              <Button size="small" variant="contained" >PC2</Button>
-              <Button size="small" variant="contained" >RM1</Button>
-              <Button size="small" variant="contained" >RM2</Button>
-              <Button size="small" variant="contained" >URM</Button>
-            </Grid>
-            <Grid item>
-              <Typography> Table PLACEHOLD </Typography>
-            </Grid>
-          </Grid>
+        <ExpansionPanelDetails className={classes.panelDetails}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <CustomTableCell>Building Type</CustomTableCell>
+                <CustomTableCell >Severe Vertical Irregularity</CustomTableCell>
+                <CustomTableCell >Moderate Vertical Irregularity</CustomTableCell>
+                <CustomTableCell >Plan Irregularity</CustomTableCell>
+                <CustomTableCell >Pre Code</CustomTableCell>
+                <CustomTableCell >Post Benchmark</CustomTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row, i) => (
+                <TableRow className={classes.row} key={i}>
+                  <CustomTableCell component="th" scope="row">
+                    {row}
+                  </CustomTableCell>
+
+                  <CustomTableCell >
+                    <Field name={"level1." + row + ".severe"} component={Checkbox} />
+                  </CustomTableCell>
+                  <CustomTableCell >
+                    <Field name={"level1." + row + ".moderate"} component={Checkbox} />
+                  </CustomTableCell>
+                  <CustomTableCell >
+                    <Field name={"level1." + row + ".plan"} component={Checkbox} />
+                  </CustomTableCell>
+                  <CustomTableCell >
+                    <Field name={"level1." + row + ".preCode"} component={Checkbox} />
+                  </CustomTableCell>
+                  <CustomTableCell >
+                    <Field name={"level1." + row + ".postBench"} component={Checkbox} />
+                  </CustomTableCell>
+                  
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );
   }
-}
+})
 
 export class ExtentOfReviewDetails extends PureComponent {
   render() {

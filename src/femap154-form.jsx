@@ -65,7 +65,11 @@ const formStyles = theme => ({
   }
 });
 
-const initialValues = { latitude: 0, longitude: 0, storiesAboveGrade: 1, occupancy: { residentialUnits: 0 }, hazards: { verticalIrregularity: '' } };    
+const initialValues = { 
+  latitude: 0, longitude: 0, storiesAboveGrade: 1, occupancy: { residentialUnits: 0 }, 
+  
+  hazards: { verticalIrregularity: '' } 
+};    
 
 const validationSchema = Yup.object({
   latitude: Yup.number()
