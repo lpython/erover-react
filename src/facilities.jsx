@@ -22,15 +22,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
-// console.log(AddBoxIcon);
-
-// let counter = 0;
-// function createData(name, calories, fat, carbs, protein) {
-//   counter += 1;
-//   return { id: counter, name, calories, fat, carbs, protein };
-// }
-
-// export function createTableData()
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -212,7 +203,7 @@ const styles = theme => ({
   },
 });
 
-class EnhancedTable extends React.Component {
+class Facilities extends React.Component {
   state = {
     order: 'asc',
     // orderBy: 'calories',
@@ -247,7 +238,7 @@ class EnhancedTable extends React.Component {
     this.setState({ selected: [] });
   };
 
-  handleClick = (event, id) => {
+  handleClickRow = (event, id) => {
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
@@ -267,6 +258,11 @@ class EnhancedTable extends React.Component {
 
     this.setState({ selected: newSelected });
   };
+
+  handleClickFEMA = (event) => {
+    event.stopPropagation();
+    console.log(event);
+  }
 
   handleChangePage = (event, page) => {
     this.setState({ page });
@@ -304,7 +300,7 @@ class EnhancedTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, n.id)}
+                      onClick={event => this.handleClickRow(event, n.id)}
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}
@@ -323,7 +319,7 @@ class EnhancedTable extends React.Component {
                       <TableCell align="left">{n.state}</TableCell>
                       <TableCell align="right">{n.zip}</TableCell>
                       <TableCell align="left">
-                        <IconButton aria-label="femap 154 edit or add">
+                        <IconButton aria-label="femap 154 edit or add" onClick={this.handleClickFEMA}>
                           { n.femap154 ? <EditIcon /> : <AddBoxIcon /> }
                         </IconButton>
                       </TableCell>
@@ -368,8 +364,8 @@ class EnhancedTable extends React.Component {
   }
 }
 
-EnhancedTable.propTypes = {
+Facilities.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(EnhancedTable);
+export default withStyles(styles)(Facilities);

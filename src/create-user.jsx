@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import Header from './header.jsx';
-import SignInForm from './sign-in-form.jsx';
+import CreateUserForm from './create-user-form.jsx';
 
 
 const styles = theme => ({
@@ -39,7 +39,7 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)(class SignIn extends Component {
+export default withStyles(styles)(class CreateUser extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -59,8 +59,8 @@ export default withStyles(styles)(class SignIn extends Component {
         >
           <Grid item className={classes.item}>
             <Paper className={classes.paper}>
-              <Typography variant="h5">Sign In</Typography>
-              <SignInForm />
+              <Typography variant="h5">Create User</Typography>
+              <CreateUserForm />
             </Paper>
           </Grid>
         </Grid>

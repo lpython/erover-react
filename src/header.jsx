@@ -4,13 +4,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
 
-export default ({ muscles, onExerciseCreate }) => {
+export default ({ }) => {
   return (
-    <div>
+    <div style={{ flexGrow: 1 }}>
       <AppBar position="static" >
-        <Toolbar>
-          <Typography variant="h5" color="inherit" style={{flex: 1}}>
-            eROVER
+        <Toolbar variant="dense">
+          <Typography variant="h6" color="inherit" style={{flex: 1}}>
+            eRover
           </Typography>
         </Toolbar>
       </AppBar>

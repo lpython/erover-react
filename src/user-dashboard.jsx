@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import withStyles from "@material-ui/core/styles/withStyles";
 
+import Header from './header.jsx';
 import Facilites from './facilities.jsx';
 
 import exampleFacilites from './example-data/facilities.json';
@@ -34,11 +35,14 @@ export default withStyles(styles)(class UserDashboard extends Component {
     const { classes } = this.props;
 
     return (
-      <Grid container className={classes.container}>
-        <Grid item className={classes.item}>
-          <Facilites data={exampleFacilites} />
+      <>
+        <Header />
+        <Grid container className={classes.container}>
+          <Grid item className={classes.item}>
+            <Facilites data={exampleFacilites} />
+          </Grid>
         </Grid>
-      </Grid>
+      </>
     );
   }
 })

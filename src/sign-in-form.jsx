@@ -1,10 +1,13 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 // import TextField from "@material-ui/core/TextField";
 
 import { Formik, Field, Form } from "formik";
 import { TextField } from 'formik-material-ui';
 import * as Yup from "yup";
+
+import { Link } from 'react-router-dom';
 
 import { Debug } from './formik-debug.jsx';
 
@@ -46,15 +49,26 @@ export default function SignInForm() {
               component={TextField}
               fullWidth
             />
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              style={{marginTop: '1rem'}}
-              fullWidth
-            >
-              Submit
-            </Button>
+            <Grid container style={{ marginTop: '1rem'}}>
+              <Grid item xs={4}></Grid>
+              <Grid item xs={4}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                >
+                  Submit
+                </Button>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  component={Link}
+                  to="/newUser"
+                >
+                  Create User
+                </Button>
+              </Grid>
+            </Grid>
 
             <Debug />
           </Form>

@@ -7,9 +7,14 @@ import {
 } from '@material-ui/core';
 import { deepOrange, amber } from '@material-ui/core/colors';
 
-import Header from './header.jsx';
-import Main from './main.jsx';
-import Footer from './footer.jsx';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+
+import SignIn from './sign-in.jsx';
+import CreateUser from './create-user.jsx';
+import UserDashboard from './user-dashboard.jsx';
+import FEMA_P154 from './femap154-form.jsx';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -43,25 +48,27 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <Body page={this.state.page}/>
+        <Routing />
       </MuiThemeProvider>
     );
   }
 }
 
-const styles = theme => ({
-  
-});
-
-const Body = withStyles(styles)(function Body({ classes, page }) {
+function Routing() {
+  const err404 = () => ( <h6> Error: 404 </h6> );
+ 
   return (
-    <>
-      <Header />
-      <Main  />
-      { page == 'signIn' && <Footer/> }  
-    </>
-  );
-});
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={SignIn} exact/>
+        <Route path="/newUser" component={CreateUser} exact/>
+        <Route path="/user" component={UserDashboard} exact/>
+        <Route path="/femap154" component={FEMA_P154} exact/>
+        <Route component={err404} />
+      </Switch>
+    </BrowserRouter>
+  )
+}
 
 document.addEventListener('DOMContentLoaded', 
   () => ReactDOM.render( <App/> , document.querySelector('#app')));
