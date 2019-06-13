@@ -24,6 +24,50 @@ import * as Yup from "yup";
 import { Debug } from './formik-debug.jsx';
 
 import * as Fragments from './femap154-form-fragments.jsx';
+import { AppContext } from './contexts.js';
+
+const styles = theme => ({
+  container: {
+    [theme.breakpoints.up('sm')]: {
+      height: 'calc(100% - 64px - 48px)'
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: 'calc(100% - 56px - 48px)'
+    }
+  },
+  item: {
+    padding: '20px',
+    margin: '5px',
+    width: '100%'
+  }
+});
+
+export default withStyles(styles)(class FEMA_P154 extends React.Component {
+  static contextType = AppContext;
+  
+  state = { form: undefined };
+
+  componentDidMount() {
+    const facilityID = this.props.match.params.id;
+    console.log(this)
+    const form = this.context.retrieveForm(facilityID);
+    this.setState({ form });
+  }
+
+  render() {
+    const { match, classes } = this.props;
+
+    return (
+      <Grid container className={classes.container}>
+        <Grid item className={classes.item}>
+          { this.state.form && <FEMA_P154_Form form={this.state.form} /> }
+        </Grid>
+      </Grid>
+    );
+  }
+})
+
+
 
 const formStyles = theme => ({
   '@global': {
@@ -65,11 +109,11 @@ const formStyles = theme => ({
   }
 });
 
-const initialValues = { 
-  latitude: 0, longitude: 0, storiesAboveGrade: 1, occupancy: { residentialUnits: 0 }, 
+// const initialValues = { 
+//   latitude: 0, longitude: 0, storiesAboveGrade: 1, occupancy: { residentialUnits: 0 }, 
   
-  hazards: { verticalIrregularity: '' } 
-};    
+//   hazards: { verticalIrregularity: '' } 
+// };    
 
 const validationSchema = Yup.object({
   latitude: Yup.number()
@@ -85,7 +129,7 @@ let FEMA_P154_Form = (props) => {
   const { classes } = props;
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={props.form}
       validationSchema={validationSchema}
       onSubmit={(e) => { }}
     >
@@ -135,45 +179,3 @@ FEMA_P154_Form.propTypes = {
 };
 
 FEMA_P154_Form = withStyles(formStyles)(FEMA_P154_Form);
-
-const styles = theme => ({
-  container: {
-    [theme.breakpoints.up('sm')]: {
-      height: 'calc(100% - 64px - 48px)'
-    },
-    [theme.breakpoints.down('xs')]: {
-      height: 'calc(100% - 56px - 48px)'
-    }
-  },
-  item: {
-    padding: '20px',
-    margin: '5px',
-    width: '100%'
-  }
-});
-
-
-export default withStyles(styles)(function FEMA_P154({ classes }) {
-  return (
-    <Grid container className={classes.container}>
-      <Grid item className={classes.item}>
-        <FEMA_P154_Form  />
-      </Grid>
-    </Grid>
-  );
-})
-
-// internal
-
-// function LabeledRadioGroup(props) {
-//   console.log(props);
-//   return (
-//     <FormControlLabel
-//       control={<RadioGroup >{props.children}</RadioGroup>}
-//       label={props.label}
-//       labelPlacement="top"
-//       disabled={false}
-//     />
-    
-//   );
-// }

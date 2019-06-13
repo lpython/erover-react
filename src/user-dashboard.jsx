@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import Header from './header.jsx';
-import Facilites from './facilities.jsx';
+import * as R from 'ramda';
 
-import exampleFacilites from './example-data/facilities.json';
+import Facilites from './facilities.jsx';
 
 const styles = theme => ({
   container: {
@@ -26,9 +23,20 @@ const styles = theme => ({
 });
 
 export default withStyles(styles)(class UserDashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  // static contextType = AppContext;
+  state = {};
+
+  componentDidMount() {
+    try {
+      const user = JSON.parse( localStorage.getItem('user') );
+      this.setState({ user });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  handleFEMAClick = facilityID => {
+    this.props.history.push(this.props.match.url + '/femap154/' + facilityID);
   }
 
   render() {
@@ -36,10 +44,14 @@ export default withStyles(styles)(class UserDashboard extends Component {
 
     return (
       <>
-        <Header />
         <Grid container className={classes.container}>
           <Grid item className={classes.item}>
-            <Facilites data={exampleFacilites} />
+            { R.path(['state','user','facilities'],this) && 
+              <Facilites 
+                data={this.state.user.facilities} 
+                onFEMAClick={this.handleFEMAClick}
+              />
+            }
           </Grid>
         </Grid>
       </>

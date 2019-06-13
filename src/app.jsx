@@ -9,14 +9,17 @@ import { deepOrange, amber } from '@material-ui/core/colors';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import * as R from 'ramda';
+
 import SignIn from './sign-in.jsx';
 import CreateUser from './create-user.jsx';
-import UserDashboard from './user-dashboard.jsx';
-import FEMA_P154 from './femap154-form.jsx';
+import User from './user.jsx';
+
 
 import { AppContext } from './contexts.js';
 
 import * as Back from './back/back.js';
+import facilities from './facilities.jsx';
 
 
 const theme = createMuiTheme({
@@ -51,15 +54,27 @@ class App extends Component {
   handleSignIn = credientials => {
     return Back.SignIn(credientials)
       .then(user => { 
-        this.setState({ user }); 
-        // if ()
+        localStorage.setItem('user', JSON.stringify(user));
         this.browserRouter.current.history.push('/user');
       })
   }
 
+  handleFormRetrieval = facilityID => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const facilities = user.facilities;
+    const index = facilities.findIndex(f => f.id == facilityID);    
+
+    if (!R.is(Object, facilities[index].femap154)) {
+      facilities[index].femap154 = {};
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+
+    return facilities[index].femap154;
+  }
 
   appContextEvents = () => ({
-    attemptSignIn: this.handleSignIn
+    attemptSignIn: this.handleSignIn,
+    retrieveForm: this.handleFormRetrieval
   })
 
   componentDidMount() {
@@ -74,8 +89,7 @@ class App extends Component {
           <Switch>
             <Route path="/" component={SignIn} exact/>
             <Route path="/newUser" component={CreateUser} exact/>
-            <Route path="/user" render={ () => (<UserDashboard  user={this.state.user} />) } exact/>
-            <Route path="/femap154" component={FEMA_P154} />
+            <Route path="/user" component={User} />
             <Route component={() => <h6>Not found</h6>} />
           </Switch>
         </BrowserRouter>

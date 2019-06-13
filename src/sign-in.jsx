@@ -94,7 +94,7 @@ export default withStyles(styles)(class SignIn extends Component {
 
   handleAttemptSignIn = credientials => {
     console.log('[SignIn] handleAttemptSignIn():', credientials);
-    this.context.attemptSignIn(credientials)
+    return this.context.attemptSignIn(credientials)
       .then(() => {
         console.warn('Should be navigating away.')
       })

@@ -26,7 +26,10 @@ export default function SignInForm({ onSubmit }) {
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={(values, actions) => {
+        onSubmit(values)
+          .then(() => actions.setSubmitting(false));
+      }}
     >
      { (props) => {
               

@@ -214,7 +214,7 @@ class Facilities extends React.Component {
   };
 
   constructor(props) {
-    super();
+    super(props);
     this.state.data = props.data || this.state.data;
     this.state.orderBy = props.data.length > 0 ? Object.keys(props.data[0])[0] : undefined;
   }
@@ -259,9 +259,10 @@ class Facilities extends React.Component {
     this.setState({ selected: newSelected });
   };
 
-  handleClickFEMA = (event) => {
+  handleClickFEMA = (event, facilityID) => {
     event.stopPropagation();
     console.log(event);
+    this.props.onFEMAClick(facilityID);
   }
 
   handleChangePage = (event, page) => {
@@ -319,7 +320,7 @@ class Facilities extends React.Component {
                       <TableCell align="left">{n.state}</TableCell>
                       <TableCell align="right">{n.zip}</TableCell>
                       <TableCell align="left">
-                        <IconButton aria-label="femap 154 edit or add" onClick={this.handleClickFEMA}>
+                        <IconButton aria-label="femap 154 edit or add" onClick={(event) => this.handleClickFEMA(event, n.id)}>
                           { n.femap154 ? <EditIcon /> : <AddBoxIcon /> }
                         </IconButton>
                       </TableCell>
@@ -366,6 +367,7 @@ class Facilities extends React.Component {
 
 Facilities.propTypes = {
   classes: PropTypes.object.isRequired,
+  data: PropTypes.array,
 };
 
 export default withStyles(styles)(Facilities);
