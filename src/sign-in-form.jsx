@@ -21,16 +21,15 @@ const validationSchema = Yup.object({
 
 const initialValues = { name: "", email: "", password: "" };    
 
-export default function SignInForm() {
+export default function SignInForm({ onSubmit }) {
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(e) => { }}
+      onSubmit={onSubmit}
     >
      { (props) => {
               
-        console.log(props);
         const margin = {marginTop: '5px', marginBottom: '5px'};
       
         return (
@@ -49,9 +48,8 @@ export default function SignInForm() {
               component={TextField}
               fullWidth
             />
-            <Grid container style={{ marginTop: '1rem'}}>
-              <Grid item xs={4}></Grid>
-              <Grid item xs={4}>
+            <Grid container justify="space-between" style={{ marginTop: '1rem'}}>
+              <Grid item >
                 <Button
                   type="submit"
                   variant="contained"
@@ -60,9 +58,10 @@ export default function SignInForm() {
                   Submit
                 </Button>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item >
                 <Button
                   component={Link}
+                  variant="outlined"
                   to="/newUser"
                 >
                   Create User

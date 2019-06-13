@@ -46,6 +46,7 @@ export default withStyles(styles)(class CreateUser extends Component {
   }
 
   render() {
+    console.log(this.props)
     const { classes } = this.props;
     
     return (

@@ -9,11 +9,14 @@ import { deepOrange, amber } from '@material-ui/core/colors';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-
 import SignIn from './sign-in.jsx';
 import CreateUser from './create-user.jsx';
 import UserDashboard from './user-dashboard.jsx';
 import FEMA_P154 from './femap154-form.jsx';
+
+import { AppContext } from './contexts.js';
+
+import * as Back from './back/back.js';
 
 
 const theme = createMuiTheme({
@@ -39,36 +42,56 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
+  browserRouter = React.createRef();
+
   state = {
-    page: 'facilities'
+    user: null
   };
 
+  handleSignIn = credientials => {
+    return Back.SignIn(credientials)
+      .then(user => { 
+        this.setState({ user }); 
+        // if ()
+        this.browserRouter.current.history.push('/user');
+      })
+  }
+
+
+  appContextEvents = () => ({
+    attemptSignIn: this.handleSignIn
+  })
+
+  componentDidMount() {
+    console.log(this.browserRouter)
+
+  }
+
   render() {
-    
     return (
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <Routing />
-      </MuiThemeProvider>
+      <AppContext.Provider value={this.appContextEvents()} >
+        <BrowserRouter ref={this.browserRouter}>
+          <Switch>
+            <Route path="/" component={SignIn} exact/>
+            <Route path="/newUser" component={CreateUser} exact/>
+            <Route path="/user" render={ () => (<UserDashboard  user={this.state.user} />) } exact/>
+            <Route path="/femap154" component={FEMA_P154} />
+            <Route component={() => <h6>Not found</h6>} />
+          </Switch>
+        </BrowserRouter>
+      </AppContext.Provider>
     );
   }
 }
 
-function Routing() {
-  const err404 = () => ( <h6> Error: 404 </h6> );
- 
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" component={SignIn} exact/>
-        <Route path="/newUser" component={CreateUser} exact/>
-        <Route path="/user" component={UserDashboard} exact/>
-        <Route path="/femap154" component={FEMA_P154} exact/>
-        <Route component={err404} />
-      </Switch>
-    </BrowserRouter>
-  )
-}
+
 
 document.addEventListener('DOMContentLoaded', 
-  () => ReactDOM.render( <App/> , document.querySelector('#app')));
+  () => ReactDOM.render((
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </MuiThemeProvider>
+  )
+  , document.querySelector('#app'))
+);
