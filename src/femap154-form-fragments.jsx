@@ -3,8 +3,7 @@ import React, { PureComponent } from 'react';
 import PropTypes, { array } from 'prop-types';
 import classNames from 'classnames';
 
-import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
-import { spacing } from '@material-ui/system';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -25,11 +24,6 @@ import TableRow from '@material-ui/core/TableRow';
 
 import { Field, FieldArray } from "formik";
 import { TextField, Checkbox, CheckboxWithLabel, RadioGroup } from 'formik-material-ui';
-import * as Yup from "yup";
-
-import { Debug } from './formik-debug.jsx';
-
-
 
 
 export class ScoreResultsPanel extends PureComponent {
@@ -56,7 +50,6 @@ export class ScoreResultsPanel extends PureComponent {
     );
   }
 }
-
 
 export class LocationPanel extends PureComponent {
   render() {
@@ -415,7 +408,6 @@ export class HazardsDetails extends PureComponent {
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
-
     );
   }
 }
