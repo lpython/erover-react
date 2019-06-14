@@ -106,11 +106,16 @@ const formStyles = theme => ({
   fieldLargeMargin: {
     margin: theme.spacing.unit * 3,
   },
-  container: {
-    '& > *': {
-      marginBottom: '10px'
-    }
+  // container: {
+  //   '& > *': {
+  //     marginBottom: '10px'
+  //   }
+  // },
+  [theme.breakpoints.down('sm')]: {
+    panelTableOverflow: { overflowX: 'auto', overflowY: 'auto', maxHeight: '80vh' }
   },
+
+
   fab: {
     position: 'fixed',
     bottom: theme.spacing.unit * 2,
@@ -158,7 +163,16 @@ class FEMA_P154_Form extends React.Component {
 
     Back.Score_FEMA_P154(formSubset)
       .then(result => {
-        result = R.map(v => v ? v : 'None', result);
+        // result = R.map(v => {
+        //   if (!v) { return 'None'; }
+        //   if (R.is(Number, v)) { return v.toFixed(2); } 
+        //   return v;
+        // }, result);
+        result = R.map(R.cond([
+          [R.isNil, R.always('None')],
+          [R.is(Number), v => v.toFixed(2)],
+          [R.T, R.identity]
+        ]), result);
         this.setState({ scores: result })
       });
   }

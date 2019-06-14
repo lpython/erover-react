@@ -35,15 +35,15 @@ export class ScoreResultsPanel extends PureComponent {
           <Typography className={classes.heading}>Score Results</Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <Grid container justify="space-around" >
-            <Grid item> 
+          <Grid container justify="space-around" alignItems="center" spacing={8}>
+            <Grid item xs={12} sm="auto"> 
               <Button variant="contained" onClick={onRescore}>Recalculate Scores</Button>
             </Grid>
-            <Grid item> <Typography> SS: { scores.SS }            </Typography> </Grid>
-            <Grid item> <Typography> S1: { scores.SL }            </Typography> </Grid>
-            <Grid item> <Typography> Building Type: { scores.BT } </Typography> </Grid>
-            <Grid item> <Typography> Level 1 Score: { scores.SL1 } </Typography> </Grid>
-            <Grid item> <Typography> Level 2 Score: { scores.SL2 } </Typography> </Grid>
+            <Grid item xs={12} sm="auto"> <Typography variant="body2"> SS:            </Typography> <Typography> { scores.SS }  </Typography> </Grid>
+            <Grid item xs={12} sm="auto"> <Typography variant="body2"> S1:            </Typography> <Typography> { scores.SL }  </Typography> </Grid>
+            <Grid item xs={12} sm="auto"> <Typography variant="body2"> Building Type: </Typography> <Typography> { scores.BT }  </Typography> </Grid>
+            <Grid item xs={12} sm="auto"> <Typography variant="body2"> Level 1 Score: </Typography> <Typography> { scores.SL1 } </Typography> </Grid>
+            <Grid item xs={12} sm="auto"> <Typography variant="body2"> Level 2 Score: </Typography> <Typography> { scores.SL2 } </Typography> </Grid>
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -434,7 +434,7 @@ const CustomTableCell = withStyles(theme => ({
   },
 }))(TableCell);
 
-export let Level1ScorePanel = withStyles(theme => ({
+// export let Level1ScorePanel = withStyles(theme => ({
   // table: {
   //   display: 'flex',
   //   flexDirection: 'column',
@@ -458,10 +458,11 @@ export let Level1ScorePanel = withStyles(theme => ({
   //     }
   //   }
   // }
-  [theme.breakpoints.down('sm')]: {
-    panelDetails: { overflowX: 'auto', overflowY: 'auto', maxHeight: '80vh' }
-  }
-}))(class Level1ScorePanel extends PureComponent {
+  // [theme.breakpoints.down('sm')]: {
+  //   panelDetails: { overflowX: 'auto', overflowY: 'auto', maxHeight: '80vh' }
+  // }
+// }))(
+  export class Level1ScorePanel extends PureComponent {
   render() {
     const { classes } = this.props;
 
@@ -472,7 +473,7 @@ export let Level1ScorePanel = withStyles(theme => ({
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
           <Typography className={classes.heading}> Level 1 Score </Typography>
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails className={classes.panelDetails}>
+        <ExpansionPanelDetails className={classes.panelTableOverflow}>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
@@ -486,7 +487,7 @@ export let Level1ScorePanel = withStyles(theme => ({
             </TableHead>
             <TableBody>
               {rows.map((row, i) => (
-                <TableRow className={classes.row} key={i}>
+                <TableRow  key={i}>
                   <CustomTableCell component="th" scope="row">
                     {row}
                   </CustomTableCell>
@@ -515,7 +516,8 @@ export let Level1ScorePanel = withStyles(theme => ({
       </ExpansionPanel>
     );
   }
-})
+}
+// )
 
 export class ExtentOfReviewDetails extends PureComponent {
   render() {
