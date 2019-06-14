@@ -1,5 +1,5 @@
 
-import React, { PureComponent } from 'react';
+import React, { Component, PureComponent } from 'react';
 import PropTypes, { array } from 'prop-types';
 import classNames from 'classnames';
 
@@ -211,8 +211,9 @@ const AdditionalYears = withStyles(theme => ({
   }
 })
 
-export class OccupancySoilTypeDetails extends PureComponent {
+export class OccupancySoilTypeDetails extends Component {
   render() {
+    console.log('OccupancySoilTypeDetails render()')
     const { onPerformSoilLookup, classes } = this.props;
     return (
       <ExpansionPanel>
@@ -273,18 +274,25 @@ export class OccupancySoilTypeDetails extends PureComponent {
                   <FormControl component="fieldset" className={classes.formControl}>
                     <FormLabel > Soil Type </FormLabel>
                     <Field name="soilType" component={RadioGroup}>
-                      <FormControlLabel value="Hard Rock" label="Hard Rock" control={<Radio />} />
-                      <FormControlLabel value="Avg Rock" label="Avg Rock" control={<Radio />} />
-                      <FormControlLabel value="Dense Soil" label="Dense Soil" control={<Radio />} />
-                      <FormControlLabel value="Stiff Soil" label="Stiff Soil" control={<Radio />} />
-                      <FormControlLabel value="Soft Soil" label="Soft Soil" control={<Radio />} />
-                      <FormControlLabel value="Poor Soil" label="Poor Soil" control={<Radio />} />
+                      <FormControlLabel value="A" label="Hard Rock" control={<Radio />} />
+                      <FormControlLabel value="B" label="Avg Rock" control={<Radio />} />
+                      <FormControlLabel value="C" label="Dense Soil" control={<Radio />} />
+                      <FormControlLabel value="D" label="Stiff Soil" control={<Radio />} />
+                      <FormControlLabel value="E" label="Soft Soil" control={<Radio />} />
+                      <FormControlLabel value="F" label="Poor Soil" control={<Radio />} />
                       <FormControlLabel value="DNK" label="DNK" control={<Radio />} />
                     </Field>
                   </FormControl>
                 </Grid>
                 <Grid item>
-                  <Button onClick={onPerformSoilLookup}>VS30 Soil Lookup</Button>
+                  <Field name="soilType" >
+                    { ({form: { setFieldValue }}) => { 
+                      // console.log(props); 
+                      return (
+                        <Button onClick={() => onPerformSoilLookup(setFieldValue)} >VS30 Soil Lookup</Button>
+                      );
+                    }}
+                  </Field>
                 </Grid>
               </Grid>
             </Grid>

@@ -60,13 +60,11 @@ export default withStyles(styles)(class FEMA_P154 extends React.Component {
     const { match, classes } = this.props;
 
     return (
-      <Grid container className={classes.container}>
-        <Grid item className={classes.item}>
-          { this.state.form && 
-            <FEMA_P154_Form form={this.state.form} onSubmit={this.handleOnSave} /> 
-          }
-        </Grid>
-      </Grid>
+      <>
+        { this.state.form && 
+          <FEMA_P154_Form form={this.state.form} onSubmit={this.handleOnSave} /> 
+        }
+      </>
     );
   }
 })
@@ -77,6 +75,9 @@ const formStyles = theme => ({
     'html, body, #app': {
       overflowX: 'hidden'
     }
+  },
+  root: {
+    padding: '2rem 1rem 1rem 1rem'
   },
   heading: {
     fontSize: theme.typography.pxToRem(17.5),
@@ -117,11 +118,11 @@ const formStyles = theme => ({
   }
 });
 
-// const initialValues = { 
-//   latitude: 0, longitude: 0, storiesAboveGrade: 1, occupancy: { residentialUnits: 0 }, 
-  
-//   hazards: { verticalIrregularity: '' } 
-// };    
+const initialValues = { 
+  latitude: 0, longitude: 0, storiesAboveGrade: 1, occupancy: { residentialUnits: 0 }, 
+  soilType: "DNK",
+  hazards: { verticalIrregularity: '' } 
+};    
 
 const validationSchema = Yup.object({
   latitude: Yup.number()
@@ -139,20 +140,27 @@ class FEMA_P154_Form extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { form: props.form };
+    const form = R.mergeDeepLeft(props.form, initialValues);
+    this.state = { form };
   }
 
-  get formValues() { return this.formik.current.getFormikBag().values; }
+  formValues() { return this.formik.current.getFormikBag().values; }
 
-  handleSoilLookup = e => {
-    console.log(e)
+  handleSoilLookup = (setSoilValue) => {
+    const formSubset = R.pick(['latitude', 'longitude'], this.formValues());
+
+    Back.Classify_Soil_FEMA_P154(formSubset)
+      .then(result => setSoilValue('soilType', result));
   }
 
-  handleRescore = e => {
-    const formSubset = R.pick(['latitude', 'longitude', 'level1'], this.formValues);
+  handleScore = e => {
+    const formSubset = R.pick(['latitude', 'longitude', 'level1'], this.formValues());
 
     Back.Score_FEMA_P154(formSubset)
-      .then(result => this.setState({ scores: result }))
+      .then(result => {
+        result = R.map(v => v ? v : 'None', result);
+        this.setState({ scores: result })
+      });
   }
 
   componentDidMount() {
@@ -160,7 +168,7 @@ class FEMA_P154_Form extends React.Component {
 
   render() {
     const { classes, onSubmit } = this.props;
-    const { form, scores } = this.state;
+    const { scores, form } = this.state;
 
     return (
       <Formik
@@ -172,10 +180,12 @@ class FEMA_P154_Form extends React.Component {
           actions.setSubmitting(false);
         }}
       >
-        { () => (
+        { () => {
+          console.log('formik child render')
+          return (
             <Form className={classes.root}>
 
-              <Fragments.ScoreResultsPanel classes={classes} scores={scores} onRescore={this.handleRescore}/>
+              <Fragments.ScoreResultsPanel classes={classes} scores={scores} onRescore={this.handleScore}/>
 
               <Fragments.LocationPanel classes={classes} />
 
@@ -209,7 +219,7 @@ class FEMA_P154_Form extends React.Component {
 
             </Form>
           )
-        }
+        }}
       </Formik >
     );
   }

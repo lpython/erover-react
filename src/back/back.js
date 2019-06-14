@@ -69,3 +69,26 @@ export function Score_FEMA_P154(form) {
       }
     })
 }
+
+
+export function Classify_Soil_FEMA_P154(form) {
+  const endPoint = '/api/classify_soil';
+  return fetch(backend + endPoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(form)
+  })
+    .then(res => res.json())
+    .then(obj => {
+      //verify one response 
+      if (R.is(Object, obj) && obj.result && R.is(String, obj.result)) {
+        return obj.result;
+      } else {
+        const err = new Error('Classify soil failed');
+        err.userMessage = 'Classify soil failed';
+        throw err;
+      }
+    })
+}
