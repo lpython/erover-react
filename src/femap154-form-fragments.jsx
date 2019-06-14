@@ -53,7 +53,7 @@ export class ScoreResultsPanel extends PureComponent {
 
 export class LocationPanel extends PureComponent {
   render() {
-    const { classes } = this.props;
+    const { classes, onLocationClick } = this.props;
     return (
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -75,7 +75,7 @@ export class LocationPanel extends PureComponent {
                     <Grid item> <Typography> Get Lat/Lon from : </Typography> </Grid>
                     <Grid item >
                       <Grid container spacing={8}>
-                        <Grid item > <Button variant="contained" >Present location</Button> </Grid>
+                        <Grid item > <Button variant="contained" onClick={onLocationClick} >Present location</Button> </Grid>
                         <Grid item > <Button variant="contained" >Address</Button> </Grid>
                         <Grid item > <Button variant="contained" >Map</Button> </Grid>
                       </Grid>
@@ -285,14 +285,7 @@ export class OccupancySoilTypeDetails extends Component {
                   </FormControl>
                 </Grid>
                 <Grid item>
-                  <Field name="soilType" >
-                    { ({form: { setFieldValue }}) => { 
-                      // console.log(props); 
-                      return (
-                        <Button onClick={() => onPerformSoilLookup(setFieldValue)} >VS30 Soil Lookup</Button>
-                      );
-                    }}
-                  </Field>
+                  <Button onClick={onPerformSoilLookup} >VS30 Soil Lookup</Button>
                 </Grid>
               </Grid>
             </Grid>

@@ -151,11 +151,25 @@ class FEMA_P154_Form extends React.Component {
 
   formValues() { return this.formik.current.getFormikBag().values; }
 
-  handleSoilLookup = (setSoilValue) => {
+  handleGeolocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log({position})
+        const values = R.clone(this.formik.current.state.values);
+        values.latitude = position.coords.latitude;
+        values.longitude = position.coords.longitude;
+        this.formik.current.setValues(values);
+        
+      });
+    }
+  }
+
+  handleSoilLookup = () => {
+    console.log(this.formik)
     const formSubset = R.pick(['latitude', 'longitude'], this.formValues());
 
     Back.Classify_Soil_FEMA_P154(formSubset)
-      .then(result => setSoilValue('soilType', result));
+      .then(result => this.formik.current.setFieldValue('soilType', result));
   }
 
   handleScore = e => {
@@ -201,7 +215,7 @@ class FEMA_P154_Form extends React.Component {
 
               <Fragments.ScoreResultsPanel classes={classes} scores={scores} onRescore={this.handleScore}/>
 
-              <Fragments.LocationPanel classes={classes} />
+              <Fragments.LocationPanel classes={classes} onLocationClick={this.handleGeolocation}/>
 
               <Fragments.DescriptionDetails classes={classes}/>
             
