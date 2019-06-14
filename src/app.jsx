@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import 'typeface-roboto';
 import { 
   MuiThemeProvider, createMuiTheme, CssBaseline, withStyles,
-  Grid, Paper
 } from '@material-ui/core';
 import { deepOrange, amber } from '@material-ui/core/colors';
 
@@ -15,11 +14,9 @@ import SignIn from './sign-in.jsx';
 import CreateUser from './create-user.jsx';
 import User from './user.jsx';
 
-
 import { AppContext } from './contexts.js';
 
 import * as Back from './back/back.js';
-import facilities from './facilities.jsx';
 
 
 const theme = createMuiTheme({
@@ -72,9 +69,24 @@ class App extends Component {
     return facilities[index].femap154;
   }
 
+  handleFormSave = (facilityID, form) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const facilities = user.facilities;
+    const index = facilities.findIndex(f => f.id == facilityID);    
+
+    facilities[index].femap154 = form;
+    localStorage.setItem('user', JSON.stringify(user));
+
+    console.log(user)
+
+    Back.SaveUser(user)
+      .catch((error) => console.error("Unable to save user", error))
+  }
+
   appContextEvents = () => ({
     attemptSignIn: this.handleSignIn,
-    retrieveForm: this.handleFormRetrieval
+    retrieveForm: this.handleFormRetrieval,
+    saveForm: this.handleFormSave
   })
 
   componentDidMount() {

@@ -2,29 +2,23 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Radio from '@material-ui/core/Radio';
+import SaveIcon from '@material-ui/icons/Save';
 
 import { Formik, Field, Form } from "formik";
-import { TextField, CheckboxWithLabel, RadioGroup } from 'formik-material-ui';
 import * as Yup from "yup";
+import * as R from "ramda";
 
 import { Debug } from './formik-debug.jsx';
 
 import * as Fragments from './femap154-form-fragments.jsx';
 import { AppContext } from './contexts.js';
+import * as Back from './back/back.js';
+
 
 const styles = theme => ({
   container: {
@@ -45,13 +39,21 @@ const styles = theme => ({
 export default withStyles(styles)(class FEMA_P154 extends React.Component {
   static contextType = AppContext;
   
-  state = { form: undefined };
+  state = { 
+    form: undefined,
+  };
 
   componentDidMount() {
     const facilityID = this.props.match.params.id;
     console.log(this)
     const form = this.context.retrieveForm(facilityID);
-    this.setState({ form });
+    this.setState({ form, dirty: false });
+  }
+
+  handleOnSave = form => {
+    console.log(form);
+    const facilityID = this.props.match.params.id;
+    this.context.saveForm(facilityID, form); 
   }
 
   render() {
@@ -60,13 +62,14 @@ export default withStyles(styles)(class FEMA_P154 extends React.Component {
     return (
       <Grid container className={classes.container}>
         <Grid item className={classes.item}>
-          { this.state.form && <FEMA_P154_Form form={this.state.form} /> }
+          { this.state.form && 
+            <FEMA_P154_Form form={this.state.form} onSubmit={this.handleOnSave} /> 
+          }
         </Grid>
       </Grid>
     );
   }
 })
-
 
 
 const formStyles = theme => ({
@@ -106,6 +109,11 @@ const formStyles = theme => ({
     '& > *': {
       marginBottom: '10px'
     }
+  },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
   }
 });
 
@@ -120,58 +128,91 @@ const validationSchema = Yup.object({
     .max(90, "Latitude too high")
     .min(-90, "Latitude too low"),
   longitude: Yup.number()
-    .max(90, "Longitude too high")
-    .min(-90, "Longitude too low")
+    .max(180, "Longitude too high")
+    .min(-180, "Longitude too low")
 });
 
 
-let FEMA_P154_Form = (props) => {
-  const { classes } = props;
-  return (
-    <Formik
-      initialValues={props.form}
-      validationSchema={validationSchema}
-      onSubmit={(e) => { }}
-    >
-      { (props) => {
+class FEMA_P154_Form extends React.Component {
+
+  formik = React.createRef();
+
+  constructor(props) {
+    super(props);
+    this.state = { form: props.form };
+  }
+
+  get formValues() { return this.formik.current.getFormikBag().values; }
+
+  handleSoilLookup = e => {
+    console.log(e)
+  }
+
+  handleRescore = e => {
+    const formSubset = R.pick(['latitude', 'longitude', 'level1'], this.formValues);
+
+    Back.Score_FEMA_P154(formSubset)
+      .then(result => this.setState({ scores: result }))
+  }
+
+  componentDidMount() {
+  }
+
+  render() {
+    const { classes, onSubmit } = this.props;
+    const { form, scores } = this.state;
+
+    return (
+      <Formik
+        ref={this.formik}
+        initialValues={form}
+        validationSchema={validationSchema}
+        onSubmit={(values, actions) => {
+          onSubmit(values);
+          actions.setSubmitting(false);
+        }}
+      >
+        { () => (
+            <Form className={classes.root}>
+
+              <Fragments.ScoreResultsPanel classes={classes} scores={scores} onRescore={this.handleRescore}/>
+
+              <Fragments.LocationPanel classes={classes} />
+
+              <Fragments.DescriptionDetails classes={classes}/>
             
-        console.log(props);
+              <Fragments.OccupancySoilTypeDetails classes={classes} onPerformSoilLookup={this.handleSoilLookup} />
+            
+              <Fragments.HazardsDetails classes={classes} />
+            
+              <Fragments.TextAreaPanel name="comments" label="Comments" classes={classes}/>
 
-        return (
-          <Form className={classes.root}>
+              <Fragments.Level1ScorePanel classes={classes} />  
 
-            <Fragments.ScoreResultsPanel classes={classes} />
-
-            <Fragments.LocationPanel classes={classes} />
-
-            <Fragments.DescriptionDetails classes={classes}/>
+              <Fragments.ExtentOfReviewDetails classes={classes} />
           
-            <Fragments.OccupancySoilTypeDetails classes={classes}/>
-           
-            <Fragments.HazardsDetails classes={classes} />
-           
-            <Fragments.TextAreaPanel name="comments" label="Comments" classes={classes}/>
-
-            <Fragments.Level1ScorePanel classes={classes} />  
-
-            <Fragments.ExtentOfReviewDetails classes={classes} />
-         
-            <Fragments.OtherHazardsActionsDetails classes={classes}/>
-            
-            <Fragments.Level2VerticalDetails classes={classes} />
-            
-            <Fragments.Level2OtherDetails classes={classes} /> 
+              <Fragments.OtherHazardsActionsDetails classes={classes}/>
+              
+              <Fragments.Level2VerticalDetails classes={classes} />
+              
+              <Fragments.Level2OtherDetails classes={classes} /> 
+          
+              <Fragments.Level2NonStructuralDetails classes={classes}/>
         
-            <Fragments.Level2NonStructuralDetails classes={classes}/>
-      
-            <Fragments.TextAreaPanel name="level2comments" label="Level 2 Comments" classes={classes}/>
+              <Fragments.TextAreaPanel name="level2comments" label="Level 2 Comments" classes={classes}/>
 
-            <Debug />
-          </Form>
-        );
-      }}
-    </Formik >
-  );
+              <Debug />
+
+              <Fab className={classes.fab} type="submit" color='primary' >
+                <SaveIcon />
+              </Fab>
+
+            </Form>
+          )
+        }
+      </Formik >
+    );
+  }
 }
 
 FEMA_P154_Form.propTypes = {

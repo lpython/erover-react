@@ -34,7 +34,7 @@ import { Debug } from './formik-debug.jsx';
 
 export class ScoreResultsPanel extends PureComponent {
   render() {
-    const { classes } = this.props;
+    const { classes, onRescore, scores = {} } = this.props;
     return (
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -42,11 +42,14 @@ export class ScoreResultsPanel extends PureComponent {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Grid container justify="space-around" >
-            <Grid item> <Typography> SS:             </Typography> </Grid>
-            <Grid item> <Typography> S1:             </Typography> </Grid>
-            <Grid item> <Typography> Building Type:  </Typography> </Grid>
-            <Grid item> <Typography> Level 1 Score:  </Typography> </Grid>
-            <Grid item> <Typography> Level 2 Score:  </Typography> </Grid>
+            <Grid item> 
+              <Button variant="contained" onClick={onRescore}>Recalculate Scores</Button>
+            </Grid>
+            <Grid item> <Typography> SS: { scores.SS }            </Typography> </Grid>
+            <Grid item> <Typography> S1: { scores.SL }            </Typography> </Grid>
+            <Grid item> <Typography> Building Type: { scores.BT } </Typography> </Grid>
+            <Grid item> <Typography> Level 1 Score: { scores.SL1 } </Typography> </Grid>
+            <Grid item> <Typography> Level 2 Score: { scores.SL2 } </Typography> </Grid>
           </Grid>
         </ExpansionPanelDetails>
       </ExpansionPanel>
@@ -131,13 +134,11 @@ export class DescriptionDetails extends PureComponent {
                     value="yes"
                     control={<Radio disabled={false} />}
                     label="Yes"
-                    disabled={false}
                   />
                   <FormControlLabel
                     value="no"
                     control={<Radio disabled={false} />}
                     label="No"
-                    disabled={false}
                   />
                 </Field>
               </FormControl>
@@ -219,7 +220,7 @@ const AdditionalYears = withStyles(theme => ({
 
 export class OccupancySoilTypeDetails extends PureComponent {
   render() {
-    const { classes } = this.props;
+    const { onPerformSoilLookup, classes } = this.props;
     return (
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -274,18 +275,25 @@ export class OccupancySoilTypeDetails extends PureComponent {
               <Field name="occupancy.residentialUnits" type="number" label="# Residential Units" component={TextField} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel > Soil Type </FormLabel>
-                <Field name="soilType" component={RadioGroup}>
-                  <FormControlLabel value="Hard Rock" label="Hard Rock" control={<Radio />} />
-                  <FormControlLabel value="Avg Rock" label="Avg Rock" control={<Radio />} />
-                  <FormControlLabel value="Dense Soil" label="Dense Soil" control={<Radio />} />
-                  <FormControlLabel value="Stiff Soil" label="Stiff Soil" control={<Radio />} />
-                  <FormControlLabel value="Soft Soil" label="Soft Soil" control={<Radio />} />
-                  <FormControlLabel value="Poor Soil" label="Poor Soil" control={<Radio />} />
-                  <FormControlLabel value="DNK" label="DNK" control={<Radio />} />
-                </Field>
-              </FormControl>
+              <Grid container direction="column" spacing={8}>
+                <Grid item>
+                  <FormControl component="fieldset" className={classes.formControl}>
+                    <FormLabel > Soil Type </FormLabel>
+                    <Field name="soilType" component={RadioGroup}>
+                      <FormControlLabel value="Hard Rock" label="Hard Rock" control={<Radio />} />
+                      <FormControlLabel value="Avg Rock" label="Avg Rock" control={<Radio />} />
+                      <FormControlLabel value="Dense Soil" label="Dense Soil" control={<Radio />} />
+                      <FormControlLabel value="Stiff Soil" label="Stiff Soil" control={<Radio />} />
+                      <FormControlLabel value="Soft Soil" label="Soft Soil" control={<Radio />} />
+                      <FormControlLabel value="Poor Soil" label="Poor Soil" control={<Radio />} />
+                      <FormControlLabel value="DNK" label="DNK" control={<Radio />} />
+                    </Field>
+                  </FormControl>
+                </Grid>
+                <Grid item>
+                  <Button onClick={onPerformSoilLookup}>VS30 Soil Lookup</Button>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
 
